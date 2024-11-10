@@ -33,7 +33,7 @@ const int voltagePin = A0;                               // シャント抵抗�
 const long interval = 60000;                             // 1分 (60秒 x 1000ミリ秒)
 const char* ssid = STASSID;
 const char* password = STAPSK;
-const char* url = "http://aster98.f5.si/api/energy";
+const char* url = "http://solaris.f5.si/api/energy";
 const char* js = "<script>"
                  "function toggleSidebar() {"
                  "  var sidebar = document.getElementById('sidebar');"
@@ -386,7 +386,8 @@ void sendEnergy() {
   Serial.println(payload);
 
   http.end();
-  u8g2_for_adafruit_gfx.println("    電力を送信しました");
+  longPrintln(payload.c_str());
+  
 }
 
 void longPrintln(const char* inputString) {
@@ -433,7 +434,7 @@ void longPrintln(const char* inputString) {
       line = 0;
     }
     // 10文字ごとに改行
-    if (charCount % 11 == 0) {
+    if (charCount % 22 == 0) {
       u8g2_for_adafruit_gfx.println();
       line++;
     }
@@ -500,7 +501,6 @@ void loop(void) {
   // 最後に表示した時刻
   unsigned long lastPrintTime = 0;
   const unsigned long post_interval = 900000;  // 15分をミリ秒に変換
-  // = 5000;  // 5秒をミリ秒に変換
   unsigned long currentMillis = millis();
 
   timeClient.update();
